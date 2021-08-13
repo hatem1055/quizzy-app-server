@@ -12,6 +12,7 @@ const mainRoute = require('./routs')
 
 //using routs
 app.use(mainRoute)
+console.log(process.env.db)
 //runing the app
 app.listen(port, () => {
     console.log('server is up on port:' + port)
