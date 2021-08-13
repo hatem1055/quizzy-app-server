@@ -50,13 +50,13 @@ const calculate_result = async (quiz_id, options_ids) => {
 mainRouter.post('/create_result', async (req, res) => {
     const quizId = req.body.quiz_id,
         name = req.body.name
-    options_ids = req.body.options_ids, // [id1,id2,id3]
-        result = await calculate_result(quizId, options_ids),
+    options_ids = req.body.options_ids
+    try {
+        const result = await calculate_result(quizId, options_ids),
         newResult = new resultModel({
             total: result.totalQuestions, right: result.rightQuestions, percentage: result.percentage, quiz_id: quizId, name
         })
 
-    try {
         res.send(await newResult.save())
     } catch (e) {
         res.send(e)
@@ -66,8 +66,9 @@ mainRouter.post('/create_result', async (req, res) => {
 
 // get quiz 
 mainRouter.get('/get_quiz', async (req, res) => {
-    const quizCode = req.body.quiz_code,
-        theQuiz = await quizModel.findOne({
+    const quizCode = req.body.quiz_code
+    try{
+        const theQuiz = await quizModel.findOne({
             code: quizCode
         })
     if (theQuiz) {
@@ -79,12 +80,18 @@ mainRouter.get('/get_quiz', async (req, res) => {
             result: false
         })
     }
+}catch(e){
+    res.send({
+        e
+    })
+}
 })
 
 // get quiz stats
 mainRouter.get('/get_quiz_stats', async (req, res) => {
-    const quizPassword = req.body.quiz_password,
-        theQuiz = await quizModel.findOne({
+    const quizPassword = req.body.quiz_password
+    try{
+    const theQuiz = await quizModel.findOne({
             password: quizPassword
         })
     if (theQuiz) {
@@ -96,6 +103,8 @@ mainRouter.get('/get_quiz_stats', async (req, res) => {
         res.send({
             result: false
         })
+    }}catch(e){
+        res.send({e})
     }
 })
 
