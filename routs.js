@@ -98,7 +98,7 @@ mainRouter.post('/get_quiz_stats', async (req, res) => {
         const results = await resultModel.find({
             quiz_id:theQuiz._id
         })
-        res.send({result:results})
+        res.send({result:{results,quiz_name:theQuiz.name}})
     } else {
         res.send({
             result: false
