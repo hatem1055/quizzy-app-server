@@ -65,7 +65,7 @@ mainRouter.post('/create_result', async (req, res) => {
 })
 
 // get quiz 
-mainRouter.get('/get_quiz', async (req, res) => {
+mainRouter.post('/get_quiz', async (req, res) => {
     const quizCode = req.body.quiz_code
     try{
         const theQuiz = await quizModel.findOne({
@@ -88,7 +88,7 @@ mainRouter.get('/get_quiz', async (req, res) => {
 })
 
 // get quiz stats
-mainRouter.get('/get_quiz_stats', async (req, res) => {
+mainRouter.post('/get_quiz_stats', async (req, res) => {
     const quizPassword = req.body.quiz_password
     try{
     const theQuiz = await quizModel.findOne({
